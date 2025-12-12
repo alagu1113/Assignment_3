@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/Alagu/EMI_Project/mlruns/403946131108313062/models/m-ab38b4e515a54c6c9895cfda20a50d8b/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.5
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.5.1
+model_id: m-ab38b4e515a54c6c9895cfda20a50d8b
+model_size_bytes: 403774
+model_uuid: m-ab38b4e515a54c6c9895cfda20a50d8b
+prompts: null
+run_id: 67a2f4cfb9a54b6ba1c5902875ac322b
+utc_time_created: '2025-12-03 16:50:04.168443'

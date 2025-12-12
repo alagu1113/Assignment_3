@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Alagu/EMI_Project/mlruns/403946131108313062/0baccf97449d4ec384fbf0d35cc003f5/artifacts
+end_time: 1764780895758
+entry_point_name: ''
+experiment_id: '403946131108313062'
+lifecycle_stage: active
+run_id: 0baccf97449d4ec384fbf0d35cc003f5
+run_name: Regression_XGBoost Regressor
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764780846219
+status: 3
+tags: []
+user_id: Alagu

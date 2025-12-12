@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Alagu/EMI_Project/mlruns/403946131108313062/67a2f4cfb9a54b6ba1c5902875ac322b/artifacts
+end_time: 1764780607496
+entry_point_name: ''
+experiment_id: '403946131108313062'
+lifecycle_stage: active
+run_id: 67a2f4cfb9a54b6ba1c5902875ac322b
+run_name: Classification_XGBoost
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764780601100
+status: 3
+tags: []
+user_id: Alagu
