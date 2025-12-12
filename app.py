@@ -11,8 +11,8 @@ st.set_page_config(page_title="EMI Prediction App", layout="wide")
 # -----------------------------
 # GitHub RAW Model URLs
 # -----------------------------
-CLASS_MODEL_URL = "https://github.com/alagu1113/Assignment_3/blob/main/best_classification_model_XGBoost.pkl"
-REG_MODEL_URL   = "https://github.com/alagu1113/Assignment_3/blob/main/best_regression_model_XGBoost_Regressor.pkl"
+CLASS_MODEL_URL = "https://github.com/alagu1113/Assignment_3/blob/main/emi_classifier_small.pkl"
+REG_MODEL_URL   = "https://github.com/alagu1113/Assignment_3/blob/main/emi_regression_4features.pkl"
 
 # -----------------------------
 # Function to load model from GitHub
