@@ -20,3 +20,4 @@ dotenv
 load_dotenv
 load_registered_model
 register_prediction_log
+mlflow
