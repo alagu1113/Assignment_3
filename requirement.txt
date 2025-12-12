@@ -29,3 +29,16 @@ joblib
 requests
 list_experiments
 list_runs
+
+mlflow==2.12.1
+sqlalchemy==2.0.23
+pandas
+numpy
+scikit-learn
+streamlit
+python-dotenv
+joblib
+requests
+protobuf==4.25.3
+
+
