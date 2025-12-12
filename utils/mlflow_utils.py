@@ -10,14 +10,14 @@ load_dotenv()
 # -----------------------------
 # MLflow Tracking Setup
 # -----------------------------
-TRACKING_URI = "file:///C:/Users/Alagu/EMI_Project/mlruns"
+TRACKING_URI = "https://github.com/alagu1113/Assignment_3/tree/main/mlruns/"
 mlflow.set_tracking_uri(TRACKING_URI)
 
 # -----------------------------
 # Your MLflow Run IDs
 # -----------------------------
 RUN_ID_CLASSIFICATION = "67a2f4cfb9a54b6ba1c5902875ac322b"
-RUN_ID_REGRESSION     = "8bce97d1297047efb7d0e86e47989e43"
+RUN_ID_REGRESSION     = "0baccf97449d4ec384fbf0d35cc003f5"
 
 # NOTE: If there are separate run folders inside the experiment,
 # point to the exact model artifact folder inside each run.
