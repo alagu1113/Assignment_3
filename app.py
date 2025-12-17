@@ -2,7 +2,7 @@ import streamlit as st
 import joblib
 import requests
 import pandas as pd
-import mlflow
+#import mlflow
 import os
 from io import BytesIO
 
@@ -110,3 +110,4 @@ if st.button("Predict EMI Eligibility & Amount"):
 
     except:
         st.warning("⚠️ MLflow tracking disabled or not configured.")
+
