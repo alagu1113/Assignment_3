@@ -1,49 +1,28 @@
-# pages/3_Monitor.py
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 
 st.set_page_config(
-    page_title="Model Monitor",
-    page_icon="🧾",
+    page_title="Monitor",
     layout="wide"
 )
 
-st.title("🧾 Application Monitoring")
+st.title("Model Monitoring")
 
-st.info("MLflow monitoring has been removed. This page shows app-level status only.")
+st.write("MLflow monitoring has been removed.")
+st.write("This page is kept to avoid navigation errors.")
 
-# -----------------------------
-# Basic App Health Information
-# -----------------------------
-st.subheader("📊 Application Status")
-
-status_data = {
+data = {
     "Component": [
         "Streamlit App",
-        "Prediction Engine",
-        "User Interface",
-        "Cloud Deployment"
+        "Prediction Page",
+        "Monitoring Page"
     ],
     "Status": [
-        "Running ✅",
-        "Operational ✅",
-        "Active ✅",
-        "Healthy ✅"
-    ],
-    "Last Checked": [
-        datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    ] * 4
+        "Running",
+        "Available",
+        "Active"
+    ]
 }
 
-df_status = pd.DataFrame(status_data)
-st.dataframe(df_status, use_container_width=True)
-
-# -----------------------------
-# Placeholder for Future Logs
-# -----------------------------
-st.subheader("📁 Prediction Logs (Optional)")
-
-st.warning(
-    "Prediction logging is currently disabled.\n\n"
-    "
+df = pd.DataFrame(data)
+st.dataframe(df)
