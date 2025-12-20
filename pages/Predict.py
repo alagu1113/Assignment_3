@@ -1,37 +1,17 @@
 import streamlit as st
-import pandas as pd
-import joblib
-import os
+import math
 
 # -----------------------------
-# Page Config
+# Page Configuration
 # -----------------------------
 st.set_page_config(
-    page_title="EMI Eligibility & EMI Prediction",
+    page_title="EMI Eligibility & EMI Calculator",
     page_icon="🏦",
     layout="centered"
 )
 
-st.title("🔮 EMI Eligibility & EMI Amount Prediction")
-st.caption("Prediction based on 4 input features")
-
-# -----------------------------
-# Load Models Safely
-# -----------------------------
-@st.cache_resource
-def load_models():
-    if not os.path.exists("emi_classifier_4features.pkl"):
-        st.error("❌ Classifier model file not found.")
-        st.stop()
-    if not os.path.exists("emi_regression_4features.pkl"):
-        st.error("❌ Regression model file not found.")
-        st.stop()
-
-    clf_model = joblib.load("emi_classifier_4features.pkl")
-    reg_model = joblib.load("emi_regression_4features.pkl")
-    return clf_model, reg_model
-
-clf, reg = load_models()
+st.title("🏦 EMI Eligibility & EMI Prediction")
+st.caption("Rule-based EMI calculation (No ML Model)")
 
 # -----------------------------
 # User Inputs
@@ -39,64 +19,68 @@ clf, reg = load_models()
 st.subheader("📥 Enter Applicant Details")
 
 age = st.number_input("Age", min_value=18, max_value=100, step=1)
-income = st.number_input(
+monthly_income = st.number_input(
     "Monthly Salary (₹)", min_value=1000.0, step=1000.0, format="%.2f"
 )
 loan_amount = st.number_input(
     "Requested Loan Amount (₹)", min_value=1000.0, step=5000.0, format="%.2f"
 )
-tenure = st.number_input(
-    "Requested Loan Tenure (Months)", min_value=1, max_value=360, step=1
+tenure_months = st.number_input(
+    "Loan Tenure (Months)", min_value=1, max_value=360, step=1
+)
+annual_interest = st.number_input(
+    "Annual Interest Rate (%)", min_value=1.0, max_value=30.0, step=0.1
 )
 
 # -----------------------------
-# Prediction
+# EMI Formula Function
 # -----------------------------
-if st.button("🔮 Predict"):
+def calculate_emi(P, annual_rate, N):
+    r = annual_rate / (12 * 100)  # monthly interest rate
+    emi = (P * r * (1 + r) ** N) / ((1 + r) ** N - 1)
+    return emi
+
+# -----------------------------
+# Prediction Logic
+# -----------------------------
+if st.button("🔮 Predict EMI & Eligibility"):
     try:
-        input_df = pd.DataFrame([{
-            "age": age,
-            "monthly_salary": income,
-            "requested_amount": loan_amount,
-            "requested_tenure": tenure
-        }])
+        emi = calculate_emi(loan_amount, annual_interest, tenure_months)
 
-        # Align feature order with training
-        try:
-            input_df = input_df[clf.feature_names_in_]
-        except AttributeError:
-            pass
+        # Business rules
+        max_affordable_emi = monthly_income * 0.40
 
-        # Predictions
-        prob = clf.predict_proba(input_df)[0][1]
-        emi_pred = float(reg.predict(input_df)[0])
+        age_ok = age <= 60
+        income_ok = emi <= max_affordable_emi
 
-        # Business rule
-        max_affordable_emi = income * 0.40
-        eligible = prob >= 0.55 and emi_pred <= max_affordable_emi
-        eligible_label = "Eligible" if eligible else "Not Eligible"
+        eligible = age_ok and income_ok
+        eligibility_label = "Eligible" if eligible else "Not Eligible"
 
         # -----------------------------
-        # Display Result
+        # Display Results
         # -----------------------------
         st.subheader("📊 Prediction Result")
 
         if eligible:
-            st.success(f"✔ Loan Eligibility: {eligible_label}")
-            st.metric("Recommended EMI (₹ / month)", f"{emi_pred:,.2f}")
+            st.success(f"✔ Loan Eligibility: {eligibility_label}")
+            st.metric("Monthly EMI (₹)", f"{emi:,.2f}")
+            st.write(f"Maximum Affordable EMI: ₹{max_affordable_emi:,.2f}")
         else:
-            st.error(f"❌ Loan Eligibility: {eligible_label}")
-            st.write(
-                f"Required EMI: ₹{emi_pred:,.2f}  |  "
-                f"Affordable EMI Limit: ₹{max_affordable_emi:,.2f}"
-            )
+            st.error(f"❌ Loan Eligibility: {eligibility_label}")
+            st.write(f"Calculated EMI: ₹{emi:,.2f}")
+            st.write(f"Affordable EMI Limit: ₹{max_affordable_emi:,.2f}")
+
+            if not age_ok:
+                st.warning("⚠️ Age exceeds eligibility criteria (≤ 60 years).")
+            if not income_ok:
+                st.warning("⚠️ EMI exceeds 40% of monthly income.")
 
     except Exception as e:
-        st.error("⚠️ Prediction failed. Please check input values.")
+        st.error("⚠️ Unable to calculate EMI.")
         st.exception(e)
 
 # -----------------------------
 # Footer
 # -----------------------------
 st.markdown("---")
-st.caption("🚀 Streamlit Cloud | EMI Prediction App (No MLflow)")
+st.caption("🚀 Streamlit Cloud | Rule-Based EMI Prediction App")
