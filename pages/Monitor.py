@@ -1,6 +1,6 @@
 # pages/3_Monitor.py
 import streamlit as st
-from utils.mlflow_utils import list_experiments, list_runs
+#from utils.mlflow_utils import list_experiments, list_runs
 import pandas as pd
 
 st.title("🧾 Model Monitoring (MLflow)")
@@ -32,3 +32,4 @@ if sel:
         if metric_keys:
             sel_metric = st.selectbox("Select metric to plot", metric_keys)
             st.line_chart(df.set_index("start_time")[sel_metric])
+
